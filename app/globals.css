@@ -783,6 +783,70 @@ input {
   height: 16px;
 }
 
+/* BOOK PAGE */
+.inner__wrapper {
+  display: flex;
+  gap: 16px;
+}
+
+.inner__book {
+  width: 100%;
+}
+
+.inner__book--title {
+  font-size: 32px;
+}
+
+
+
+.inner__book--title,
+.inner__book--author 
+ {
+  color: #032b41;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+
+.inner__book--subtitle {
+  font-size: 20px;
+  color: #032b41;
+  margin-bottom: 16px;
+  font-weight: 300;
+}
+
+.inner__book--wrapper {
+  border-top: 1px solid #e1e7ea;
+  border-bottom: 1px solid #e1e7ea;
+  padding: 16px 0;
+  margin-bottom: 24px;
+}
+
+.inner__book--description-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 400px;
+  row-gap: 12px;
+}
+
+.inner__book--description {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  color: #032b41;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.inner__book--icon {
+  display: flex;
+  height: 24px;
+  width: 24px;
+  margin-right: 4px;
+}
+
+
+
 
 
 @media (max-width: 1200px) {
