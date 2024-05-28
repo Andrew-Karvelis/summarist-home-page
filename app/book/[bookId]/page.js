@@ -2,17 +2,21 @@
 
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams, useRouter } from "next/navigation";
 import { auth } from "@/firebase";
 import LoginModal from "@/components/modals/LoginModal";
 import SignupModal from "@/components/modals/SignupModal";
+import { openLoginModal } from "@/redux/modalSlice";
 
-
-export default function BookPage({ onLoginSuccess }) {
+export default function BookPage() {
   const { bookId } = useParams();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState(null);
+
+  const isLoginModalOpen = useSelector((state) => state.modals.loginModalOpen);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!bookId) {
@@ -36,27 +40,48 @@ export default function BookPage({ onLoginSuccess }) {
       });
   }, [bookId]);
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("User is signed in:", user); // Log the user object when signed in
+      } else {
+        console.log("No user is signed in."); // Log when no user is signed in
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!books) {
-    return <div>No book data available</div>;
-  }
-
   async function handleReadAndListen() {
-    auth.onAuthStateChanged(function (user) {
-      if (user) {
-        router.push(`/player/${bookId}`);
-      } else {
-        // Handle user not logged in
-      }
-    });
+    const user = auth.currentUser;
+    if (user) {
+      console.log("user IS signed in", user);
+      router.push(`/player/${bookId}`);
+    } else {
+      console.log("user NOT signed in", user);
+      dispatch(openLoginModal());
+    }
   }
 
-  function handleSignIn() {
-    onLoginSuccess()
+  function handleLoginSuccess() {
+    router.push(`/player/${bookId}`);
+    console.log("success");
   }
+
+  const handleLogout = () => {
+    auth
+      .signOut()
+      .then(() => {
+        console.log("user signed out");
+      })
+      .catch((error) => {
+        console.error("sign out error", error);
+      });
+  };
 
   return (
     <div className="row">
@@ -213,10 +238,11 @@ export default function BookPage({ onLoginSuccess }) {
               </div>
             </div>
             <div className="inner__book--secondary-title">What's it about?</div>
-            <div className="inner__book--tags-wrapper">
-              <div className="inner__book--tag">{books.tags[0]}</div>
-              <div className="inner__book--tag">{books.tags[1]}</div>
-            </div>
+              <div  className="inner__book--tags-wrapper">
+            {books.tags.map((tag, index) => (
+                <div key={index} className="inner__book--tag">{tag}</div>
+              ))}
+              </div>
             <div class="inner__book--book-description">
               {books.bookDescription}
             </div>
@@ -240,8 +266,11 @@ export default function BookPage({ onLoginSuccess }) {
           </div>
         </div>
       </div>
-      <LoginModal onSignIn={handleSignIn}/>
-      <SignupModal onSignIn={handleSignIn}/>
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onLoginSuccess={handleLoginSuccess}
+      />
+      <SignupModal />
     </div>
   );
 }
