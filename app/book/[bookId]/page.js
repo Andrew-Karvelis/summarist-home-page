@@ -43,9 +43,9 @@ export default function BookPage() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log("User is signed in:", user); // Log the user object when signed in
+        console.log("User is signed in:", user);
       } else {
-        console.log("No user is signed in."); // Log when no user is signed in
+        console.log("No user is signed in."); 
       }
     });
 
@@ -72,16 +72,6 @@ export default function BookPage() {
     console.log("success");
   }
 
-  const handleLogout = () => {
-    auth
-      .signOut()
-      .then(() => {
-        console.log("user signed out");
-      })
-      .catch((error) => {
-        console.error("sign out error", error);
-      });
-  };
 
   return (
     <div className="row">
