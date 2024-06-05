@@ -42,7 +42,7 @@ export default function LoginModal({ onLoginSuccess }) {
       onLoginSuccess();
     } catch (error) {
       console.error("error signing in as guest: ", error.message);
-      setError.error(error.message);
+      setError(error.message);
     }
   }
 

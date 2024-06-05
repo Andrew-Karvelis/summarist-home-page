@@ -1,8 +1,14 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
 import "../app/globals.css";
 import "../public/landing.png";
+
+import React, { useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from "react-redux";
+import { openLoginModal } from "@/redux/modalSlice";
+
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 
 import { AiFillAudio, AiFillBulb, AiFillFileText } from "react-icons/ai";
 import { BsStarFill, BsStarHalf } from "react-icons/bs";
@@ -10,32 +16,26 @@ import { BiCrown } from "react-icons/bi";
 import { RiLeafLine } from "react-icons/ri";
 import LoginModal from "./modals/LoginModal";
 import SignupModal from "./modals/SignupModal";
-import { openLoginModal } from "@/redux/modalSlice";
-import { useDispatch } from "react-redux";
 
 export default function Landing() {
   const dispatch = useDispatch();
-  // const [currentIndex, setCurrentIndex] = useState(0);
+  const router = useRouter();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  // useEffect(() => {
-  //   const headings = document.querySelectorAll(".statistics__heading");
-  //   const interval = setInterval(() => {
-  //     setCurrentIndex((prevIndex) => (prevIndex + 1) % headings.length);
-  //   }, 2000);
+  
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, redirect to /foryou
+        router.push('/foryou');
+      } else {
+        // No user is signed in, you may choose to show a login modal
+        dispatch(openLoginModal()); // Dispatch action to open login modal
+      }
+    });
+  }, [dispatch, router]);
 
-  //   return () => clearInterval(interval);
-  // }, []);
-
-  // useEffect(() => {
-  //   const headings = document.querySelectorAll(".statistics__heading");
-  //   headings.forEach((heading, index) => {
-  //     if (index === currentIndex) {
-  //       heading.classList.add("statistics__heading--active");
-  //     } else {
-  //       heading.classList.remove("statistics__heading--active");
-  //     }
-  //   });
-  // }, [currentIndex]);
 
   return (
     <>
