@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import makeStore from '@/redux/store';
 import StoreProvider from "./StoreProvider";
+import AuthListener from "@/firebase";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider store={makeStore}>
+          <AuthListener />
           {children}
         </StoreProvider>
       </body>
