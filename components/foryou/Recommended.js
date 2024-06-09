@@ -1,26 +1,6 @@
-"use client";
+import React from "react";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-export default function Recommended() {
-  const [loading, setLoading] = useState(false);
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(
-        "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=recommended"
-      )
-      .then(function (response) {
-        setBooks(response.data);
-        setLoading(false);
-      })
-      .catch(function (error) {
-        console.error("error fetching data: ", error);
-        setLoading(false);
-      });
-  });
+export default function Recommended({ books }) {
   return (
     <>
       <div className="foryou__title">Recommended For You</div>
@@ -28,6 +8,7 @@ export default function Recommended() {
       <div className="foryou__recommended--books">
         {books.map((book) => (
           <a
+            key={book.id}
             className="foryou__recommended--books-link"
             href={`/book/${book.id}`}
           >

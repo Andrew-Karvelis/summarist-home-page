@@ -50,7 +50,7 @@ export const getPortalUrl = async (app) => {
 
   let dataWithUrl;
   try {
-    const functions = getFunctions(app, "us-central1");
+    const functions = getFunctions(app, "australia-southeast1");
     const functionRef = httpsCallable(
       functions,
       "ext-firestore-stripe-payments-createPortalLink"

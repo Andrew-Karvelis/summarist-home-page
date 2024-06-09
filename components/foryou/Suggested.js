@@ -1,26 +1,6 @@
-"use client";
+import React from "react";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-export default function Suggested() {
-  const [loading, setLoading] = useState(false);
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(
-        "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=suggested"
-      )
-      .then(function (response) {
-        setBooks(response.data);
-        setLoading(false);
-      })
-      .catch(function (error) {
-        console.error("error fetching data: ", error);
-        setLoading(false);
-      });
-  });
+export default function Suggested({ books }) {
   return (
     <>
       <div className="foryou__title">Suggested</div>
@@ -28,11 +8,14 @@ export default function Suggested() {
       <div className="foryou__recommended--books">
         {books.map((book) => (
           <a
+            key={book.id}
             className="foryou__recommended--books-link"
             href={`/book/${book.id}`}
           >
             {book.subscriptionRequired && (
-              <div className="book__pill book__pill--subscription-required">Premium</div>
+              <div className="book__pill book__pill--subscription-required">
+                Premium
+              </div>
             )}
             <figure className="book__image--wrapper">
               <img
@@ -60,7 +43,7 @@ export default function Suggested() {
                     <path d="M13 7h-2v6h6v-2h-4z"></path>
                   </svg>
                 </div>
-                <div className="recommended__book--details-text">3:02</div>
+                <div className="recommended__book--details-text">{book.duration}</div>
               </div>
               <div className="recommended__book--details">
                 <div className="recommended__book--details-icon">
