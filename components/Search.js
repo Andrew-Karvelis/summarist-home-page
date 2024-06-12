@@ -1,35 +1,79 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import SkeletonSearchLoader from "./SkeletonLoader";
 
 export default function Search({ initialBooks = { Search: [] } }) {
   const [booksData, setBooksData] = useState(initialBooks);
   const [searchValue, setSearchValue] = useState("");
+  const [loading, setLoading] = useState(false);
+  const latestSearchValueRef = useRef(searchValue);
 
-  async function searchTerm(event) {
-    const value = event.target.value;
-    setSearchValue(value);
-    if (value.length > 0) {
+  const debounce = (func, wait) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func(...args);
+      }, wait);
+    };
+  };
+
+  const searchTerm = useCallback(
+    async (value) => {
+      if (value.trim() === "") {
+        setBooksData(initialBooks);
+        setLoading(false);
+        return;
+      }
+      setLoading(true);
       try {
-        const { data } = await axios.get(
+        const response = await axios.get(
           `https://us-central1-summaristt.cloudfunctions.net/getBooksByAuthorOrTitle?search=${encodeURIComponent(
             value
           )}`
         );
-        console.log("Fetched books data:", data);
-        if (data.Search && Array.isArray(data.Search)) {
-          setBooksData(data);
-        } else {
-          setBooksData({ Search: [] });
+        if (latestSearchValueRef.current === value) {
+          setBooksData(response.data);
+          console.log("Fetched books data:", response.data);
+          setLoading(false);
         }
       } catch (error) {
-        console.error("error fetching books: ", error);
-        setBooksData({ Search: [] });
+        console.error("Error fetching books:", error);
+        setBooksData([]);
+        setLoading(false);
       }
-    } else {
-      setBooksData({ Search: [] });
+    },
+    [initialBooks]
+  );
+
+  // wrapped debouce in a Callback to memoize it and ensure reference stays the same between renders unless searchTerm changes
+  const debouncedSearchTerm = useCallback(
+    debounce((value) => {
+      searchTerm(value);
+    }, 300),
+    [searchTerm]
+  );
+
+  useEffect(() => {
+    const searchElement = document.getElementById("inputSearch");
+    if (searchElement) {
+      const handleInput = (event) => {
+        const value = event.target.value;
+        latestSearchValueRef.current = value;
+        setSearchValue(value);
+        if (value.trim() !== "") {
+          setLoading(true); // Set loading to true immediately when user types
+        }
+        debouncedSearchTerm(value);
+      };
+      searchElement.addEventListener("input", handleInput);
+      return () => {
+        searchElement.removeEventListener("input", handleInput);
+      };
     }
-  }
+  }, [debouncedSearchTerm]);
+
   return (
     <div className="search__background">
       <div className="search__wrapper">
@@ -41,10 +85,19 @@ export default function Search({ initialBooks = { Search: [] } }) {
             <div className="search__input--wrapper">
               <input
                 className="search__input"
+                id="inputSearch"
                 placeholder="Search for books"
                 type="text"
                 value={searchValue}
-                onChange={searchTerm}
+                onChange={(event) => {
+                  const value = event.target.value;
+                  latestSearchValueRef.current = value;
+                  setSearchValue(value);
+                  if (value.trim() !== "") {
+                    setLoading(true); // Set loading to true immediately when user types
+                  }
+                  debouncedSearchTerm(value);
+                }}
               />
               <div className="search__icon">
                 <svg
@@ -52,7 +105,7 @@ export default function Search({ initialBooks = { Search: [] } }) {
                   fill="none"
                   stroke-width="0"
                   viewBox="0 0 24 24"
-                  class="search__delete--icon"
+                  className="search__delete--icon"
                   height="1em"
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
@@ -69,8 +122,10 @@ export default function Search({ initialBooks = { Search: [] } }) {
 
         {searchValue.length > 0 && (
           <div className="search__books--wrapper">
-            {booksData.Search && booksData.Search.length > 0 ? (
-              booksData.Search.map((book) => (
+            {loading ? (
+              <SkeletonSearchLoader />
+            ) : booksData.length > 0 ? (
+              booksData.map((book) => (
                 <a
                   key={book.id}
                   className="search__book--link"
@@ -78,7 +133,11 @@ export default function Search({ initialBooks = { Search: [] } }) {
                 >
                   <figure
                     className="book__image--wrapper"
-                    style={{ height: "80px", width: "80px", minWidth: "80px" }}
+                    style={{
+                      height: "80px",
+                      width: "80px",
+                      minWidth: "80px",
+                    }}
                   >
                     <img
                       className="book__image"
@@ -115,7 +174,7 @@ export default function Search({ initialBooks = { Search: [] } }) {
                 </a>
               ))
             ) : (
-              <p>No books found for {searchValue}</p>
+              <p>No books found</p>
             )}
           </div>
         )}
