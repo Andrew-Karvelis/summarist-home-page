@@ -1677,20 +1677,52 @@ input[type="range"]::-ms-thumb {
 }
 
 /* SKELETON LOADING */
+.skeleton {
+  background-color: #ddd;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite;
+}
+
 .skeleton__search--loader {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: #ddd;
-  border-radius: 4px;
-  animation: shimmer 1.5s infinite;
   height: 100px;
+  width: 100%;
+}
+
+.skeleton__selected--list {
+  height: 170px;
+  width: 60%;
+  margin-bottom: 24px;
+}
+
+.skeleton__book--wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  width: 100%;
+}
+
+.skeleton__book--title {
+  height: 20px;
+  width: 80%;
+}
+.skeleton__book--author {
+  height: 15px;
+  width: 50%;
+}
+.skeleton__book--details {
+  height: 15px;
   width: 100%;
 }
 
 @keyframes shimmer {
   0% {
     background-position: -100%;
+  }
+  50% {
+    background-position: 50%;
   }
   100% {
     background-position: 100%;

@@ -3,10 +3,12 @@ import Sidebar from "@/components/Sidebar";
 import Recommended from "@/components/foryou/Recommended";
 import Selected from "@/components/foryou/Selected";
 import Suggested from "@/components/foryou/Suggested";
+import fetchInitialBooks from "@/lib/fetchInitialBooks";
 import React from "react";
 
 export default async function ForYouPage() {
-  const initialData = await fetchInitalBooks();
+  const initialData = await fetchInitialBooks();
+
 
   return (
     <div id="__next">
@@ -18,7 +20,7 @@ export default async function ForYouPage() {
             <div className="foryou__wrapper">
               <Selected books={initialData.selected} />
               <Recommended books={initialData.recommended} />
-              <Suggested books={initialData.suggested}/>
+              <Suggested books={initialData.suggested} />
             </div>
           </div>
         </div>
@@ -27,20 +29,18 @@ export default async function ForYouPage() {
   );
 }
 
-async function fetchInitalBooks() {
-  const urls = [
-    "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=recommended",
-    "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=selected",
-    "https://us-central1-summaristt.cloudfunctions.net/getBooks?status=suggested",
-  ];
+// export async function getServerSideProps() {
+//   const initialData = await fetchInitialBooksWithDelay();
 
-  const responses = await Promise.all(urls.map((url) => fetch(url)));
+//   return {
+//     props: {
+//       initialData,
+//     },
+//   };
+// }
 
-  const data = await Promise.all(responses.map((res) => res.json()));
-
-  return {
-    recommended: data[0],
-    selected: data[1],
-    suggested: data[2],
-  }
-}
+// async function fetchInitialBooksWithDelay() {
+//   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+//   await delay(2000); // 2 seconds delay
+//   return fetchInitialBooks();
+// }
