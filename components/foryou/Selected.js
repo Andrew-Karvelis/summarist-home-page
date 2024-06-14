@@ -1,10 +1,12 @@
 import React from "react";
+import { SkeletonSelected } from "../SkeletonLoader";
 
 export default function Selected({ books }) {
   return (
     <div className="selected__foryou--wrapper">
       <h2 className="foryou__title">Selected just for you</h2>
       {books.map((book) => (
+        !books ? <SkeletonSelected /> :
         <a className="selected__book" key={book.id} href={`/book/${book.id}`}>
           <div className="selected__book--subtitle">{book.subTitle}</div>
 
