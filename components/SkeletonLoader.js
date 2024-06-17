@@ -9,7 +9,8 @@ export function SkeletonSelected() {
 }
 
 export function SkeletonBook() {
-  return <div className="skeleton skeleton__book--wrapper">
+  return <div className="skeleton__book--wrapper">
+    <div className="skeleton skeleton__book"></div>
     <div className="skeleton skeleton__book--title"></div>
     <div className="skeleton skeleton__book--author"></div>
     <div className="skeleton skeleton__book--details"></div>

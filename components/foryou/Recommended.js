@@ -1,14 +1,30 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
+import fetchInitialBooks from "@/lib/fetchInitialBooks";
 import { SkeletonBook } from "../SkeletonLoader";
 
-export default function Recommended({ books }) {
+export default function Recommended() {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getBooks = async () => {
+      const data = await fetchInitialBooks();
+      setBooks(data.recommended);
+      setLoading(false);
+    };
+    getBooks();
+  }, []);
   return (
     <>
       <div className="foryou__title">Recommended For You</div>
       <div className="foryou__subtitle">We think you'll like these</div>
       <div className="foryou__recommended--books">
-        {books.length > 0
-          ? books.map((book) => (
+        {loading
+          ? Array.from({ length: 6 }).map((_, index) => (
+              <SkeletonBook key={index} />
+            ))
+          : books.map((book) => (
               <a
                 key={book.id}
                 className="foryou__recommended--books-link"
@@ -37,7 +53,7 @@ export default function Recommended({ books }) {
                       <svg
                         stroke="currentColor"
                         fill="currentColor"
-                        stroke-width="0"
+                        strokeWidth="0"
                         viewBox="0 0 24 24"
                         height="1em"
                         width="1em"
@@ -47,14 +63,15 @@ export default function Recommended({ books }) {
                         <path d="M13 7h-2v6h6v-2h-4z"></path>
                       </svg>
                     </div>
-                    <div className="recommended__book--details-text">3:02</div>
+
+                    <div className="recommended__book--details-text">3:24</div>
                   </div>
                   <div className="recommended__book--details">
                     <div className="recommended__book--details-icon">
                       <svg
                         stroke="currentColor"
                         fill="currentColor"
-                        stroke-width="0"
+                        strokeWidth="0"
                         viewBox="0 0 1024 1024"
                         height="1em"
                         width="1em"
@@ -69,9 +86,6 @@ export default function Recommended({ books }) {
                   </div>
                 </div>
               </a>
-            ))
-          : Array.from({ length: 6 }).map((_, index) => (
-              <SkeletonBook key={index} />
             ))}
       </div>
     </>

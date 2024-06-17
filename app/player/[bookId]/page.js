@@ -5,9 +5,6 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useRouter } from "next/navigation";
 import { auth } from "@/firebase";
-import LoginModal from "@/components/modals/LoginModal";
-import SignupModal from "@/components/modals/SignupModal";
-import { openLoginModal } from "@/redux/modalSlice";
 
 export default function BookPage() {
   const { bookId } = useParams();

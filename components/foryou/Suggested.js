@@ -1,12 +1,31 @@
-import React from "react";
+"use client";
+import fetchInitialBooks from "@/lib/fetchInitialBooks";
+import React, { useEffect, useState } from "react";
+import { SkeletonBook } from "../SkeletonLoader";
 
-export default function Suggested({ books }) {
+export default function Suggested() {
+
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getBooks = async () => {
+      const data = await fetchInitialBooks();
+      setBooks(data.recommended);
+      setLoading(false);
+    };
+    getBooks();
+  }, []);
   return (
     <>
       <div className="foryou__title">Suggested</div>
       <div className="foryou__subtitle">Browse these books</div>
       <div className="foryou__recommended--books">
-        {books.map((book) => (
+        {loading 
+        ? Array.from({length: 6}).map((_, index) => (
+          <SkeletonBook key={index}/>
+        )) :
+        books.map((book) => (
           <a
             key={book.id}
             className="foryou__recommended--books-link"
