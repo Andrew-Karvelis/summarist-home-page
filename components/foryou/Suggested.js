@@ -2,6 +2,7 @@
 import fetchInitialBooks from "@/lib/fetchInitialBooks";
 import React, { useEffect, useState } from "react";
 import { SkeletonBook } from "../SkeletonLoader";
+import GetAudioTime from "../GetAudioTime";
 
 export default function Suggested() {
 
@@ -11,7 +12,7 @@ export default function Suggested() {
   useEffect(() => {
     const getBooks = async () => {
       const data = await fetchInitialBooks();
-      setBooks(data.recommended);
+      setBooks(data.suggested);
       setLoading(false);
     };
     getBooks();
@@ -62,7 +63,7 @@ export default function Suggested() {
                     <path d="M13 7h-2v6h6v-2h-4z"></path>
                   </svg>
                 </div>
-                <div className="recommended__book--details-text">{book.duration}</div>
+                <GetAudioTime audioLink={book.audioLink} />
               </div>
               <div className="recommended__book--details">
                 <div className="recommended__book--details-icon">
