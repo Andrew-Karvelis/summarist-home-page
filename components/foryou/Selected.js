@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { SkeletonSelected } from "../SkeletonLoader";
 import fetchInitialBooks from "@/lib/fetchInitialBooks";
+import GetAudioTime from "../GetAudioTime";
 
 export default function Selected() {
   const [books, setBooks] = useState([]);
@@ -49,7 +50,7 @@ export default function Selected() {
                     </svg>
                   </div>
                   <div className="selected__book--duration">
-                    {book.duration}
+                    <GetAudioTime audioLink={book.audioLink} />
                   </div>
                 </div>
               </div>
