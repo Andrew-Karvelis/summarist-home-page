@@ -64,7 +64,7 @@ export default function Sidebar() {
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
-                  stroke-width="0"
+                  strokeWidth="0"
                   viewBox="0 0 1024 1024"
                   height="1em"
                   width="1em"
@@ -81,7 +81,7 @@ export default function Sidebar() {
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
-                  stroke-width="0"
+                  strokeWidth="0"
                   viewBox="0 0 16 16"
                   height="1em"
                   width="1em"
@@ -98,7 +98,7 @@ export default function Sidebar() {
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
-                  stroke-width="0"
+                  strokeWidth="0"
                   viewBox="0 0 24 24"
                   height="1em"
                   width="1em"
@@ -131,13 +131,13 @@ export default function Sidebar() {
             </div>
           </div>
           <div className="sidebar__bottom">
-            <a className="sidebar__link--wrapper" href="/settings">
+            <a className="sidebar__link--wrapper" href="/account">
               <div className="sidebar__link--line"></div>
               <div className="sidebar__icon--wrapper">
                 <svg
                   stroke="currentColor"
                   fill="none"
-                  stroke-width="0"
+                  strokeWidth="0"
                   viewBox="0 0 15 15"
                   height="1em"
                   width="1em"
@@ -161,8 +161,8 @@ export default function Sidebar() {
                   fill="none"
                   stroke-width="2"
                   viewBox="0 0 24 24"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   height="1em"
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"

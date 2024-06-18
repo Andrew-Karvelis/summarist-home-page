@@ -1734,7 +1734,80 @@ input[type="range"]::-ms-thumb {
   width: 100%;
 }
 
+/* SETTINGS */
+.section__title {
+	font-size: 32px;
+	color: #032b41;
+	text-align: center;
+	margin-bottom: 32px;
+	font-weight: 700;
+}
 
+.section__title.page__title {
+	text-align: left;
+	border-bottom: 1px solid #e1e7ea;
+	padding-bottom: 16px;
+}
+
+.setting__content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	margin-bottom: 32px;
+	border-bottom: 1px solid #e1e7ea;
+	padding-bottom: 24px;
+}
+
+.settings__sub--title {
+	font-size: 18px;
+	font-weight: 700;
+	color: #032b41;
+}
+
+.settings__text {
+	color: #032b41;
+}
+
+.setting__content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	margin-bottom: 32px;
+	border-bottom: 1px solid #e1e7ea;
+	padding-bottom: 24px;
+}
+
+.setting__content:last-child {
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+.settings__login--wrapper {
+	max-width: 460px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 auto;
+}
+
+.btn.settings__login--btn {
+	width: 100px;
+}
+
+.settings__login--text {
+	font-size: 24px;
+	font-weight: 700;
+	color: #032b41;
+	text-align: center;
+	margin-bottom: 16px;
+}
+
+.btn.settings__upgrade--btn {
+	width: -moz-fit-content;
+	width: fit-content;
+}
 
 @media (max-width: 1200px) {
   .selected__book {
