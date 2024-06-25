@@ -36,11 +36,9 @@ export default function Search({ initialBooks = { Search: [] } }) {
         );
         if (latestSearchValueRef.current === value) {
           setBooksData(response.data);
-          console.log("Fetched books data:", response.data);
           setLoading(false);
         }
       } catch (error) {
-        console.error("Error fetching books:", error);
         setBooksData([]);
         setLoading(false);
       }
@@ -78,9 +76,7 @@ export default function Search({ initialBooks = { Search: [] } }) {
   return (
     <div className="search__background">
       <div className="search__wrapper">
-        <figure>
-          <img src="logo" alt="" />
-        </figure>
+     <div style={{height:'1px', width:'19px'}}></div>
         <div className="search__content">
           <div className="search">
             <div className="search__input--wrapper">
@@ -105,7 +101,7 @@ export default function Search({ initialBooks = { Search: [] } }) {
                   <svg
                     stroke="currentColor"
                     fill="currentColor"
-                    stroke-width="0"
+                    strokeWidth="0"
                     viewBox="0 0 1024 1024"
                     height="1em"
                     width="1em"

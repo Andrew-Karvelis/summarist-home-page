@@ -44,11 +44,11 @@ const Settings = () => {
       <Sidebar />
       <LoginModal />
       <SignupModal />
-      <div class="container">
-        <div class="row">
+      <div className="container">
+        <div className="row">
           {!user ? (
             <>
-              <div class="section__title page__title">Settings</div>
+              <div className="section__title page__title">Settings</div>
 
               <div className="settings__login--wrapper">
                 <img
@@ -69,14 +69,14 @@ const Settings = () => {
             </>
           ) : (
             <>
-              <div class="section__title page__title">Settings</div>
-              <div class="setting__content">
-                <div class="settings__sub--title">Your Subscription plan</div>
-                <div class="settings__text">premium-plus</div>
+              <div className="section__title page__title">Settings</div>
+              <div className="setting__content">
+                <div className="settings__sub--title">Your Subscription plan</div>
+                <div className="settings__text">premium-plus</div>
               </div>
-              <div class="setting__content">
-                <div class="settings__sub--title">Email</div>
-                <div class="settings__text">hanna@gmail.com</div>
+              <div className="setting__content">
+                <div className="settings__sub--title">Email</div>
+                <div className="settings__text">hanna@gmail.com</div>
               </div>
             </>
           )}

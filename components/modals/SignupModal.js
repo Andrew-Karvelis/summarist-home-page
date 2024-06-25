@@ -85,7 +85,7 @@ export default function SignupModal() {
                 required
               ></input>
             </form>
-            <button class="btn modal__login--btn" onClick={handleSignUp}>
+            <button className="btn modal__login--btn" onClick={handleSignUp}>
               <span>Sign up</span>
             </button>
           </div>
