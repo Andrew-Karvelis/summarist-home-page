@@ -39,8 +39,8 @@ function AuthListener() {
 export default AuthListener;
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-
+const firestore = getFirestore(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export { auth, db, app };
+export { auth, db, app, firestore };

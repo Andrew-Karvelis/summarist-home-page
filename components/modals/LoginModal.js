@@ -36,12 +36,10 @@ export default function LoginModal({ onLoginSuccess }) {
         "123456"
       );
       const user = userCredential.user;
-      console.log("guest logged in successfully: ", user.uid);
 
       dispatch(closeLoginModal());
       onLoginSuccess();
     } catch (error) {
-      console.error("error signing in as guest: ", error.message);
       setError(error.message);
     }
   }
@@ -84,7 +82,7 @@ export default function LoginModal({ onLoginSuccess }) {
                 onChange={(e) => setPassword(e.target.value)}
               ></input>
             </form>
-            <button class="btn modal__login--btn" onClick={handleSignIn}>
+            <button className="btn modal__login--btn" onClick={handleSignIn}>
               <span>Login</span>
             </button>
           </div>

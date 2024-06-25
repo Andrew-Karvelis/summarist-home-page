@@ -13,7 +13,6 @@ export default function Selected() {
       const data = await fetchInitialBooks();
       setBooks(data.selected);
       setLoading(false);
-      console.log(data.selected);
     };
     getBooks();
   }, []);
@@ -40,7 +39,7 @@ export default function Selected() {
                     <svg
                       stroke="currentColor"
                       fill="currentColor"
-                      stroke-width="0"
+                      strokeWidth="0"
                       viewBox="0 0 16 16"
                       height="1em"
                       width="1em"
