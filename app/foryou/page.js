@@ -18,6 +18,7 @@ export default async function ForYouPage() {
         <div className="row">
           <div className="container">
             <div className="foryou__wrapper">
+              <h1>API website currently down. Sit back, relax and enjoy the skeleton loading states</h1>
               <Selected books={initialData.selected} />
               <Recommended books={initialData.recommended} />
               <Suggested books={initialData.suggested} />
@@ -28,19 +29,3 @@ export default async function ForYouPage() {
     </div>
   );
 }
-
-// export async function getServerSideProps() {
-//   const initialData = await fetchInitialBooksWithDelay();
-
-//   return {
-//     props: {
-//       initialData,
-//     },
-//   };
-// }
-
-// async function fetchInitialBooksWithDelay() {
-//   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-//   await delay(2000); // 2 seconds delay
-//   return fetchInitialBooks();
-// }
